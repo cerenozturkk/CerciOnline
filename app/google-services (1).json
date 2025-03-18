@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "673306238381",
+    "project_id": "cercionline-b9bef",
+    "storage_bucket": "cercionline-b9bef.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:673306238381:android:a6fd155d8ebaa35a419524",
+        "android_client_info": {
+          "package_name": "com.lideatech.CerciOnline"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArO9lZbw_N9KIGv4H13Nxf8PiVMbpsbYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
