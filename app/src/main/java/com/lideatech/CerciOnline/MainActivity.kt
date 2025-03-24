@@ -27,25 +27,39 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.WindowCompat
 import com.lideatech.CerciOnline.ui.theme.CerciOnlineTheme
 
+//val ONESIGNAL_APP_ID = "7892b302-1294-46ca-8e65-65b044500687"
+
 class MainActivity : ComponentActivity() {
     private var webView: WebView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Edge to edge uyumlu hale getirme
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //OneSignal.Debug.logLevel = LogLevel.VERBOSE
 
-        setContent {
-            CerciOnlineTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    WebViewContent(modifier = Modifier.padding(innerPadding)) { webViewInstance ->
-                        // WebView'ı burada alıyoruz
-                        webView = webViewInstance
+        //OneSignal Initialization
+       // OneSignal.initWithContext(this, "7892b302-1294-46ca-8e65-65b044500687")
+
+        // requestPermission will show the native Android notification permission prompt.
+        // NOTE: It's recommended to use a OneSignal In-App Message to prompt instead.
+       // CoroutineScope(Dispatchers.IO).launch {
+            //OneSignal.Notifications.requestPermission(false)
+
+            // Edge to edge uyumlu hale getirme
+            WindowCompat.setDecorFitsSystemWindows(window, false)
+
+            setContent {
+                CerciOnlineTheme {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        WebViewContent(modifier = Modifier.padding(innerPadding)) { webViewInstance ->
+                            // WebView'ı burada alıyoruz
+                            webView = webViewInstance
+                        }
                     }
                 }
             }
         }
-    }
+
+
 
     // Geri tuşu ile WebView içinde geri gitmeyi kontrol et
     override fun onBackPressed() {
@@ -79,20 +93,19 @@ fun WebViewContent(modifier: Modifier = Modifier, onWebViewCreated: (WebView) ->
                         super.onPageFinished(view, url)
                         isLoading = false
 
-                        // WebView üzerinde JavaScript çalıştırma: sınıfı kaldırma
+                        // WebView üzerinde JavaScript çalıştırma: sınıfı kaldırma ve img silme
                         view?.evaluateJavascript(
                             """
                                 (function() {
-                            let elements = document.querySelectorAll('.homeFooter');
-                            elements.forEach(el => el.style.display ='none'); 
-                            
-                         
-                            })
-                            ();
+                                    let elements = document.querySelectorAll('.homeFooter');
+                                    elements.forEach(el => el.style.display ='none'); 
+                                    
+                                    let images = document.querySelectorAll('.mobilTicimaxLogo img');
+                                    images.forEach(img => img.style.display='none'); // img'leri gizleme
+                                })();
                             """.trimIndent()
                         ) {}
                     }
-
 
                     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                         if (request?.url?.host == "www.cercionline.com") {
